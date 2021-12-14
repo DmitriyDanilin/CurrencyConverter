@@ -6,7 +6,7 @@ public with sharing class CurrencyConverter {
     private String userIso;
     private CurrencyTypeDomain currencyTypeDomain;
 
-    private CurrencyConverter(){
+    public CurrencyConverter(){
         this.userIso = UserInfo.getDefaultCurrency();
         this.currencyTypeDomain = new CurrencyTypeDomain();
     }
