@@ -3,6 +3,11 @@
  */
 
 public with sharing class CurrencyConverter {
+    private String userIso;
+
+    private CurrencyConverter(){
+        this.userIso = UserInfo.getDefaultCurrency();
+    }
 
     public Decimal convert(String fromIso, String toIso, Decimal value){
         Decimal fromIsoConversionRate = getConversionRateFromIsoCode(fromIso);
@@ -12,7 +17,7 @@ public with sharing class CurrencyConverter {
 
     public Decimal convert(String fromIso, Decimal value){
         Decimal fromIsoConversionRate = getConversionRateFromIsoCode(fromIso);
-        Decimal toIsoConversionRate = getConversionRateFromIsoCode(UserInfo.getDefaultCurrency());
+        Decimal toIsoConversionRate = getConversionRateFromIsoCode(this.userIso);
         return (value/fromIsoConversionRate) * toIsoConversionRate;
     }
 
