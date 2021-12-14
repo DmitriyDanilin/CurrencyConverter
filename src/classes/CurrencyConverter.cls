@@ -26,6 +26,7 @@ public with sharing class CurrencyConverter {
         FROM CurrencyType WHERE IsActive=TRUE AND IsoCode =:Iso];
         return ct.ConversionRate;
     }
+    private void method(){}
 
 
 }
