@@ -28,20 +28,22 @@ public with sharing class CurrencyConverter {
         public Map<String,CurrencyType> isoCodeToCurrencyType = new Map<String,CurrencyType>();
 
         private CurrencyTypeDomain(){
-            List<CurrencyType> currencyTypes= getCurrencyTypes();
-            for (CurrencyType ct : currencyTypes){
-                this.isoCodeToCurrencyType.put(ct.IsoCode,  ct);
-            }
+            setIsoCodeToCurrencyType(getCurrencyTypes());
         }
 
         public Decimal getConversionRateFromIsoCode(String Iso){
             return this.isoCodeToCurrencyType.get(Iso).ConversionRate;
         }
 
+        private void setIsoCodeToCurrencyType(List<CurrencyType> currencyTypes){
+            for (CurrencyType ct : currencyTypes){
+                this.isoCodeToCurrencyType.put(ct.IsoCode,  ct);
+            }
+        }
+
         private List<CurrencyType> getCurrencyTypes(){
             return [SELECT Id, IsCorporate, IsoCode, ConversionRate, DecimalPlaces
             FROM CurrencyType WHERE IsActive=TRUE ];
         }
-
     }
 }
