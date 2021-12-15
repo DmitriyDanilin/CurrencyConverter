@@ -2,13 +2,13 @@
  * Created by DmytroDanilin on 14.12.2021.
  */
 
-public with sharing class CurrencyConverter {
-    private String userIso;
-    private CurrencyTypeDomain currencyTypeDomain;
+public with sharing class CurrencyConverter implements ICurrencyConverter{
+    private String userIso = UserInfo.getDefaultCurrency();
+    private CurrencyTypeDomain currencyTypeDomain = new CurrencyTypeDomain();
 
     public CurrencyConverter(){
-        this.userIso = UserInfo.getDefaultCurrency();
-        this.currencyTypeDomain = new CurrencyTypeDomain();
+        //this.userIso = UserInfo.getDefaultCurrency();
+        //this.currencyTypeDomain = new CurrencyTypeDomain();
     }
 
     public Decimal convert(String fromIso, String toIso, Decimal value){
@@ -27,8 +27,9 @@ public with sharing class CurrencyConverter {
     private class CurrencyTypeDomain{
         public Map<String,CurrencyType> isoCodeToCurrencyType = new Map<String,CurrencyType>();
 
-        private CurrencyTypeDomain(){
-            setIsoCodeToCurrencyType(getCurrencyTypes());
+        public CurrencyTypeDomain(){
+            List<CurrencyType> currencyTypes = this.getCurrencyTypes();
+            this.setIsoCodeToCurrencyType(currencyTypes);
         }
 
         public Decimal getConversionRateFromIsoCode(String Iso){
