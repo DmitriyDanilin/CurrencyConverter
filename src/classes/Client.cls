@@ -4,14 +4,7 @@
 
 public with sharing class Client {
     public Decimal convert(String fromIso, String toIso, Decimal value){
-        DependencyInjection__mdt dependencyInjection = this.getDependencyInjectionMetaData();
-        CurrencyConverter currencyConverter = (CurrencyConverter) DependencyInjector.inject(Type.forName(dependencyInjection.InterfaceName__c));
+        CurrencyConverter currencyConverter = (CurrencyConverter) DependencyInjector.inject(ICurrencyConverter.class);
         return currencyConverter.convert(fromIso,toIso, value);
     }
-
-    private DependencyInjection__mdt getDependencyInjectionMetaData(){
-        return [SELECT Id, DeveloperName, InterfaceName__c, MappedClass__c
-        FROM DependencyInjection__mdt];
-    }
-
 }

@@ -3,6 +3,7 @@
  */
 
 public with sharing class DependencyInjector {
+
     public static Object inject(Type interfaceType){
         Type classType = Type.forName(getMappedClassName(interfaceType));
         return classType.newInstance();
